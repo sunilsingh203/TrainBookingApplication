@@ -51,11 +51,12 @@ public class App {
                 case 2:
                     System.out.println("Enter the username to Login");
                     String nameToLogin = scanner.next();
-                    System.out.println("Enter the password to signup");
+                    System.out.println("Enter the password to login");
                     String passwordToLogin = scanner.next();
-                    User userToLogin = new User(nameToLogin, passwordToLogin, UserServiceUtil.hashPassword(passwordToLogin), new ArrayList<>(), UUID.randomUUID().toString());
+                    User userToLogin = new User(nameToLogin, passwordToLogin, UserServiceUtil.hashPassword(passwordToLogin), new ArrayList<>(), nameToLogin+UUID.randomUUID().toString());
                     try {
                         userBookingService = new UserBookingService(userToLogin);
+                        System.out.println( userToLogin.getUserId() + " are logged in");
                     } catch (IOException ex) {
                         return;
                     }

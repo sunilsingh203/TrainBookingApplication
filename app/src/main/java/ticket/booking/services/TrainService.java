@@ -3,10 +3,10 @@ package ticket.booking.services;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ticket.booking.entities.Train;
-import ticket.booking.entities.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 public class TrainService {
@@ -15,19 +15,21 @@ public class TrainService {
 
     private List<Train> trainList;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private static  final String USER_FILE_PATH = "app/src/main/java/ticket/booking/localDb/users.json";
+    private static  final String TRAIN_FILE_PATH = "app/src/main/java/ticket/booking/localDb/users.json";
 
 
-
+    public TrainService() throws IOException {
+        loadTrainListFromFile();
+    }
 
 
     private void loadTrainListFromFile() throws IOException {
-        trainList = objectMapper.readValue(new File(USER_FILE_PATH), new TypeReference<List<Train>>() {});
+        trainList = objectMapper.readValue(new File(TRAIN_FILE_PATH), new TypeReference<List<Train>>() {});
     }
 
-    private Boolean addTrain(Train train){
+    public Boolean addTrain(Train train){
         try{
             trainList.add(train);
             saveTrainListToFile();
@@ -39,13 +41,25 @@ public class TrainService {
     }
 
     private void saveTrainListToFile() throws IOException {
-        File usersFile = new File(USER_FILE_PATH);
+        File usersFile = new File(TRAIN_FILE_PATH);
         objectMapper.writeValue(usersFile, trainList);
     }
 
-    private Train getTrain(int id){
-        return trainList.get(id);
+    public Train getTrain(String id) throws IOException {
+
+        Iterator<Train> iterator = trainList.iterator();
+        while(iterator.hasNext()){
+            Train train = iterator.next();
+            if (id.trim().equalsIgnoreCase(train.getTrainId().trim())){
+                return train;
+            }
+        }
+        return null;
     }
+
+
+
+
 
 
 }

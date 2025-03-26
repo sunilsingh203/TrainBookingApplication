@@ -63,6 +63,12 @@
       }
     ],
     "user_id": "abcdefgh"
+  },
+  {
+    "name": "rima",
+    "password": "tima123",
+    "hashed_password": "$2a$10$NR287.0pk37INUKsDkrv2.oTgH2P09dRhL2V.rrxIP9L/ljRsrknO",
+    "tickets_booked": [],
+    "user_id": "37e8e741-3ded-439d-81d7-804ef447c1db"
   }
-
 ]
