@@ -45,17 +45,15 @@ public class TrainService {
         objectMapper.writeValue(usersFile, trainList);
     }
 
-    public Train getTrain(String id) throws IOException {
-
-        Iterator<Train> iterator = trainList.iterator();
-        while(iterator.hasNext()){
-            Train train = iterator.next();
-            if (id.trim().equalsIgnoreCase(train.getTrainId().trim())){
-                return train;
-            }
-        }
-        return null;
+    public Train getTrain(String id) {
+        if (trainList == null) return null;
+        return trainList.stream()
+                .filter(train -> id.trim().equalsIgnoreCase(train.getTrainId().trim()))
+                .findFirst()
+                .orElse(null);
     }
+
+
 
 
 
