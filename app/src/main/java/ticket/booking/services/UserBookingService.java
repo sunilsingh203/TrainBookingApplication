@@ -50,6 +50,10 @@ public class UserBookingService {
         objectMapper.writeValue(usersFile, userList);
     }
     public void fetchBooking(){
+        if(user == null){
+            System.out.println("no User login !");
+            return;
+        }
         user.printTickets();
     }
     public Boolean cancelBooking(String ticketId){

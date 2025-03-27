@@ -47,11 +47,18 @@ public class User {
         return ticketsBooked;
     }
 
-    public void printTickets(){
+    public void printTickets() {
+        if (ticketsBooked.isEmpty()) {
+            System.out.println("No tickets booked!");
+            return;
+        }
+
+        System.out.println("Your booked tickets:");
         for (int i = 0; i<ticketsBooked.size(); i++){
             System.out.println(ticketsBooked.get(i).getTicketInfo());
         }
     }
+
 
     public String getUserId() {
         return userId;

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrainService {
 
@@ -30,19 +31,18 @@ public class TrainService {
     }
 
     public Boolean addTrain(Train train){
-        try{
-            trainList.add(train);
-            saveTrainListToFile();
-            return Boolean.TRUE;
-        }
-        catch(IOException e){
-            return Boolean.FALSE;
-        }
+        trainList.add(train);
+        saveTrainListToFile();
+        return Boolean.TRUE;
     }
 
-    private void saveTrainListToFile() throws IOException {
-        File usersFile = new File(TRAIN_FILE_PATH);
-        objectMapper.writeValue(usersFile, trainList);
+    private void saveTrainListToFile()  {
+        try{
+        objectMapper.writeValue(new File(TRAIN_FILE_PATH), trainList);
+        }
+        catch(IOException e){
+            e.printStackTrace();// handles
+        }
     }
 
     public Train getTrain(String id) {
@@ -51,6 +51,18 @@ public class TrainService {
                 .filter(train -> id.trim().equalsIgnoreCase(train.getTrainId().trim()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Train> searchTrains(String source, String destination) {
+        return trainList.stream().filter(train -> validTrain(train, source, destination)).collect(Collectors.toList());
+    }
+    private boolean validTrain(Train train, String source, String destination) {
+        List<String> stationOrder = train.getStations();
+
+        int sourceIndex = stationOrder.indexOf(source.toLowerCase());
+        int destinationIndex = stationOrder.indexOf(destination.toLowerCase());
+
+        return sourceIndex != -1 && destinationIndex != -1 && sourceIndex < destinationIndex;
     }
 
 

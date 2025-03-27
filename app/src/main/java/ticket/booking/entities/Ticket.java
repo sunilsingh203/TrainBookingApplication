@@ -91,4 +91,15 @@ public class Ticket{
         this.train = train;
     }
 
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "ticketId='" + ticketId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", source='" + source + '\'' +
+                ", destination='" + destination + '\'' +
+                ", dateOfTravel='" + dateOfTravel + '\'' +
+                ", train=" + train +
+                '}';
+    }
 }

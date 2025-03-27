@@ -56,12 +56,21 @@ public class App {
                     User userToLogin = new User(nameToLogin, passwordToLogin, UserServiceUtil.hashPassword(passwordToLogin), new ArrayList<>(), nameToLogin+UUID.randomUUID().toString());
                     try {
                         userBookingService = new UserBookingService(userToLogin);
-                        System.out.println( userToLogin.getUserId() + " are logged in");
+                        if (userBookingService.loginUser()){
+                            System.out.println(nameToLogin + " logged in");
+                        }
+                        else {
+                            System.out.println("invalid username or password");
+                        }
+
                     } catch (IOException ex) {
                         return;
                     }
                     break;
                 case 3:
+                    System.out.println("The Booked tickets are :");
+                    userBookingService.fetchBooking();
+
                     break;
 
                 default:
